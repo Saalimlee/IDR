@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID CONVERT AND READER BY SLABS</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #007bff;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: block;
+            text-align: left;
+            color: #555;
+        }
+
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .outputBox {
+            font-size: 16px;
+            color: #333;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #f9f9f9;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .outputBox span {
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .color-1 { color: #e74c3c; }
+        .color-2 { color: #3498db; }
+        .color-3 { color: #f39c12; }
+        .color-4 { color: #2ecc71; }
+        .color-5 { color: #9b59b6; }
+        .color-6 { color: #1abc9c; }
+        .color-7 { color: #34495e; }
+        .color-8 { color: #e67e22; }
+        .color-9 { color: #e74c3c; }
+        .color-10 { color: #3498db; }
+        .color-11 { color: #f39c12; }
+        .color-12 { color: #2ecc71; }
+        .color-13 { color: #9b59b6; }
+        .color-14 { color: #1abc9c; }
+        .color-15 { color: #34495e; }
+        .color-16 { color: #e67e22; }
+        .color-17 { color: #e74c3c; }
+        .color-18 { color: #3498db; }
+        .color-19 { color: #f39c12; }
+        .color-20 { color: #2ecc71; }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ID CONVERT AND READER BY SLABS</h1>
+        <label for="inputText">Enter text:</label>
+        <input type="text" id="inputText" placeholder="e.g., A58B21">
+        <button onclick="convertText()">Convert</button>
+        <button onclick="speakText()">Speak</button>
+        <div id="outputText" class="outputBox"></div>
+    </div>
+    <div class="footer">
+        Developed by Saalim
+    </div>
+
+    <script>
+        const natoPhonetics = {
+            'A': 'Alpha', 'B': 'Bravo', 'C': 'Charlie', 'D': 'Delta', 'E': 'Echo', 
+            'F': 'Foxtrot', 'G': 'Golf', 'H': 'Hotel', 'I': 'India', 'J': 'Juliett', 
+            'K': 'Kilo', 'L': 'Lima', 'M': 'Mike', 'N': 'November', 'O': 'Oscar', 
+            'P': 'Papa', 'Q': 'Quebec', 'R': 'Romeo', 'S': 'Sierra', 'T': 'Tango', 
+            'U': 'Uniform', 'V': 'Victor', 'W': 'Whiskey', 'X': 'X-ray', 'Y': 'Yankee', 
+            'Z': 'Zulu', '0': 'Zero', '1': 'One', '2': 'Two', '3': 'Three', 
+            '4': 'Four', '5': 'Five', '6': 'Six', '7': 'Seven', '8': 'Eight', '9': 'Nine'
+        };
+
+        function convertToNATO(text) {
+            let colorIndex = 1;
+            return Array.from(text.toUpperCase())
+                        .map(char => {
+                            if (char.match(/[A-Z]/)) {
+                                let coloredChar = `<span class="color-${colorIndex}">${natoPhonetics[char]}</span>`;
+                                colorIndex = (colorIndex % 20) + 1;
+                                return coloredChar;
+                            } else {
+                                return `<span>${char}</span>`;
+                            }
+                        })
+                        .join(' ');
+        }
+
+        function convertText() {
+            let inputText = document.getElementById('inputText').value;
+            let outputHTML = convertToNATO(inputText);
+            document.getElementById('outputText').innerHTML = outputHTML;
+        }
+
+        function speakText() {
+            let outputText = document.getElementById('outputText').textContent;
+            if (outputText) {
+                const synth = window.speechSynthesis;
+                const utterance = new SpeechSynthesisUtterance(outputText);
+                synth.speak(utterance);
+            } else {
+                alert('Please convert text first.');
+            }
+        }
+    </script>
+</body>
+</html>
